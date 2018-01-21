@@ -20,7 +20,7 @@ Images should be numbered, but the numbers do not have to be sequential, and the
 
 1. Select a folder with input data.
 
-### As a standalone application
+### As a standalone application (*contact me for installation files and instructions*)
 
 1. Download MTSD application and install following the instructions.
 
