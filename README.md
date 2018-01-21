@@ -16,7 +16,7 @@ Images should be numbered, but the numbers do not have to be sequential, and the
 
 ### From MATLAB
 
-1. Start **actin_automatic_v1.m** script.
+1. Start **MTSD.m** script.
 
 1. Select a folder with input data.
 
