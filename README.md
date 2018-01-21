@@ -64,22 +64,22 @@ In the *Summary.csv* columns with standard errors of the mean (sem) will be addi
 ## Algorithm
 
 1. *Quantification of cell parameters and generation of cell masks.*
-⋅⋅1. Images with α-tubulin signal and masks of cell borders are loaded.
-⋅⋅1. Individual objects/cells are identified by tracing boundaries in the images with masks of cell borders. Objects touching image borders are removed.
-⋅⋅1. Parameters of identified objects/cells are obtained and stored: eccentricity, lengths of major and minor axes, orientation and area.
-⋅⋅1. Masks of each identified cell/object are generated based on boundaries.
+  1. Images with α-tubulin signal and masks of cell borders are loaded.
+  1. Individual objects/cells are identified by tracing boundaries in the images with masks of cell borders. Objects touching image borders are removed.
+  1. Parameters of identified objects/cells are obtained and stored: eccentricity, lengths of major and minor axes, orientation and area.
+  1. Masks of each identified cell/object are generated based on boundaries.
 
 1. *Generation of a histogram of signal change magnitudes with respect to direction.*
-⋅⋅1. Images with α-tubulin signal are converted to double precision.
-⋅⋅1. Using the generated cell masks, α-tubulin signal is filtered for each cell from the α-tubulin image by multiplication of the mask and the image.
-⋅⋅1. The filtered α-tubulin signal is 2D-convolved using a modified 5x5 Sobel filter. 
-⋅⋅1. Directions (angles in radians) and magnitudes of signal change (from now on “magnitudes”) are calculated for each pixel from convolution. Directions are converted to degrees from radians.
-⋅⋅1. Pixels whose magnitudes were smaller than 22% of maximum magnitude are excluded to reduce noise for the estimation of microtubule alignment.
-⋅⋅1. Pixels are sorted according to their direction of signal change to generate a histogram of magnitude of signal change with respect to its direction for each cell/object, bin data every 4º, sum magnitudes of pixels that fall within the same bin, and normalize the resulting histogram to total intensity.
+  1. Images with α-tubulin signal are converted to double precision.
+  1. Using the generated cell masks, α-tubulin signal is filtered for each cell from the α-tubulin image by multiplication of the mask and the image.
+  1. The filtered α-tubulin signal is 2D-convolved using a modified 5x5 Sobel filter. 
+  1. Directions (angles in radians) and magnitudes of signal change (from now on “magnitudes”) are calculated for each pixel from convolution. Directions are converted to degrees from radians.
+  1. Pixels whose magnitudes were smaller than 22% of maximum magnitude are excluded to reduce noise for the estimation of microtubule alignment.
+  1. Pixels are sorted according to their direction of signal change to generate a histogram of magnitude of signal change with respect to its direction for each cell/object, bin data every 4º, sum magnitudes of pixels that fall within the same bin, and normalize the resulting histogram to total intensity.
 
 1 *Estimation of microtubule alignment parameters: MTSD and MTDEV.*
-⋅⋅1. Individual histograms are fitted with Von Mises distribution8. As histograms of magnitudes range from -90° to 90° degrees, and the circular statistics is performed on -180° to 180° range, stretch the histograms linearly by factor of 2.
-⋅⋅1. Concentration parameter (kappa) and mean (mu) of Von Mises distribution are calculated for each histogram. kappa is used to estimate the standard deviation of distributions, whereas mu is used to estimate the main direction of change (phi). To compensate for previously applied stretch, divide both values by 2.
-⋅⋅1. MTSD is quantified as the standard deviation around the mean direction of α-tubulin signal, thereby informing about microtubule alignment with each other: SD = sqrt(1/kappa). 
-⋅⋅1. MTDEV (for MicroTubule direction DEViation) is quantified as the difference between the direction of cell's long axis (cell_dir) and the mean direction of α-tubulin signal. To estimate the main direction of α-tubulin signal (x), apply a 90º correction to main direction of change (phi) given that the signal changes perpendicular to its main direction. Calculate the absolute difference between the main direction of α-tubulin signal (x) and the cell's long axis: MTDEV = abs(cell_dir - x). 
-⋅⋅1. Cell shape parameters (5.1.3) and microtubule alignment parameters (MTSD, MTDEV) are saved for each cell in each image, and as averaged data per image.
+  1. Individual histograms are fitted with Von Mises distribution8. As histograms of magnitudes range from -90° to 90° degrees, and the circular statistics is performed on -180° to 180° range, stretch the histograms linearly by factor of 2.
+  1. Concentration parameter (kappa) and mean (mu) of Von Mises distribution are calculated for each histogram. kappa is used to estimate the standard deviation of distributions, whereas mu is used to estimate the main direction of change (phi). To compensate for previously applied stretch, divide both values by 2.
+  1. MTSD is quantified as the standard deviation around the mean direction of α-tubulin signal, thereby informing about microtubule alignment with each other: SD = sqrt(1/kappa). 
+  1. MTDEV (for MicroTubule direction DEViation) is quantified as the difference between the direction of cell's long axis (cell_dir) and the mean direction of α-tubulin signal. To estimate the main direction of α-tubulin signal (x), apply a 90º correction to main direction of change (phi) given that the signal changes perpendicular to its main direction. Calculate the absolute difference between the main direction of α-tubulin signal (x) and the cell's long axis: MTDEV = abs(cell_dir - x). 
+  1. Cell shape parameters (5.1.3) and microtubule alignment parameters (MTSD, MTDEV) are saved for each cell in each image, and as averaged data per image.
